@@ -1,0 +1,23 @@
+services:
+  web:
+    build: .
+    container_name: cloudnotes-web
+    ports:
+      - "5000:5000"
+    environment:
+      DATABASE_HOST: database
+    depends_on:
+      - database
+
+  database:
+    image: postgres:15
+    container_name: cloudnotes-db
+    environment:
+      POSTGRES_USER: clouduser
+      POSTGRES_PASSWORD: cloudpass
+      POSTGRES_DB: cloudnotes
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
